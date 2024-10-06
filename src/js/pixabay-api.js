@@ -20,7 +20,6 @@ let totalHits = 0;
 let totalLoaded = 0;
 
 
-
 async function getImages(text, isNewSearch = false) {
 
     if (isNewSearch) {
