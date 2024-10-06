@@ -17,6 +17,7 @@ let page = 1;
 const perPage = 15;
 let inputText = '';
 let totalHits = 0;
+let totalLoaded = 0;
 
 
 
@@ -43,6 +44,7 @@ async function getImages(text, isNewSearch = false) {
 
 
         console.log(`Response received for page: ${page}`); 
+
         totalHits = response.data.totalHits;
         page++;
         return response.data; 
@@ -86,21 +88,18 @@ function handleImages(text, isNewSearch = false) {
             
             console.log(`Rendering ${data.hits.length} images`);
             renderHTML.render(data);
+            totalLoaded += data.hits.length;
 
 
-            if (data.hits.length > 0) {
-                if (totalHits > (page - 1) * perPage) {
-                    loadButton.classList.add('visible');
-                } else {
-                    loadButton.classList.add('invisible');
-                    iziToast.show({
-                        color: 'info',
-                        message: "Извините, но вы достигли конца результатов поиска.",
-                        position: "topRight"
-                    });
-                }
-            } else {
+            if (totalLoaded >= totalHits) {
                 loadButton.classList.add('invisible');
+                iziToast.show({
+                    color: 'info',
+                    message: "We're sorry, but you've reached the end of search results.",
+                    position: "topRight"
+                });
+            } else {
+                loadButton.classList.add('visible');
             }
             
         })
