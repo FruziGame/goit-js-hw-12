@@ -26,7 +26,7 @@ async function getImages(text, isNewSearch = false) {
         page = 1;
     }
 
-    console.log(`Fetching images for: "${text}", page: ${page}`); // Лог перед запросом
+    console.log(`Fetching images for: "${text}", page: ${page}`); 
 
     try {
         const response = await axios.get(url, {
@@ -42,7 +42,7 @@ async function getImages(text, isNewSearch = false) {
         }); 
 
 
-        console.log(`Response received for page: ${page}`); // Лог после получения ответа
+        console.log(`Response received for page: ${page}`); 
         totalHits = response.data.totalHits;
         page++;
         return response.data; 
@@ -57,14 +57,14 @@ async function getImages(text, isNewSearch = false) {
 
 function handleImages(text, isNewSearch = false) {
 
-    console.log(`Handling images for: "${text}", isNewSearch: ${isNewSearch}`); // Лог текущего состояния
+    console.log(`Handling images for: "${text}", isNewSearch: ${isNewSearch}`);
     inputText = text;
     const gallery = document.querySelector('.gallery');
     loader.classList.add("visible");
 
 
 
-    console.log(`Handling images for: "${text}", isNewSearch: ${isNewSearch}`); // Лог перед вызовом getImages
+    console.log(`Handling images for: "${text}", isNewSearch: ${isNewSearch}`); 
     getImages(inputText, isNewSearch)
         .then(data => {
 
@@ -84,20 +84,23 @@ function handleImages(text, isNewSearch = false) {
                 return;
             }
             
-            console.log(`Rendering ${data.hits.length} images`); // Лог перед отрисовкой
+            console.log(`Rendering ${data.hits.length} images`);
             renderHTML.render(data);
-            loadButton.classList.add('visible')
 
 
-
-            if (totalHits <= page * perPage) {
-
+            if (data.hits.length > 0) {
+                if (totalHits > (page - 1) * perPage) {
+                    loadButton.classList.add('visible');
+                } else {
+                    loadButton.classList.add('invisible');
+                    iziToast.show({
+                        color: 'info',
+                        message: "Извините, но вы достигли конца результатов поиска.",
+                        position: "topRight"
+                    });
+                }
+            } else {
                 loadButton.classList.add('invisible');
-                iziToast.show({
-                    color: 'info',
-                    message: "We're sorry, but you've reached the end of search results.",
-                    position: "topRight"
-                });
             }
             
         })
