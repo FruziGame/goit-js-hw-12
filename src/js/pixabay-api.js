@@ -142,12 +142,11 @@ function smoothScroll() {
     if (card) {
         const cardHeight = card.getBoundingClientRect().height; // Получаем высоту карточки
         window.scrollBy({
-            top: cardHeight * 3, // Прокручиваем на две высоты карточки
+            top: cardHeight * 2, // Прокручиваем на две высоты карточки
             behavior: 'smooth' // Плавная прокрутка
         });
     }
 }
-
 
 
 
