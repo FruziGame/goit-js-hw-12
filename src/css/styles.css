@@ -78,6 +78,14 @@ body {
   height: 40px;
 }
 
+.load-button {
+  display: block;
+  width: 125px;
+  margin: 0 auto;
+  margin-top: 32px;
+  display: none;
+}
+
 .button:hover {
   background-color: #6C8CFF;
 }

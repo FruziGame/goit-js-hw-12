@@ -3,7 +3,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 
 const gallery = document.querySelector(".gallery");
-const loader = document.querySelector(".loader");
+
 
 
 const lightbox = new SimpleLightbox('.gallery a', {          
@@ -40,7 +40,6 @@ function render(data) {
         </a></div>
     `).join("");
 
-    gallery.innerHTML = markup;
-    loader.classList.remove("visible");
+    gallery.insertAdjacentHTML('beforeend', markup);
     lightbox.refresh();
 }

@@ -15,15 +15,16 @@ form.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
-    if (formInput.value.trim() === "" ) {
+    const inputText = formInput.value.trim();
+
+    if (inputText === "" ) {
         iziToast.show({
             color: 'white',
             message: `Please fill the input`,
             position: "topRight"
           })
     } else {
-        const inputText = formInput.value
-        imageFetcher.handleImages(inputText)
+        imageFetcher.handleImages(inputText, true)
     }
     
     form.reset()
