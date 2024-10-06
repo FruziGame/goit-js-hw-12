@@ -25,6 +25,7 @@ async function getImages(text, isNewSearch = false) {
     if (isNewSearch) {
         page = 1;
         totalLoaded = 0;
+        loadButton.classList.add('visible');
     }
 
     console.log(`Fetching images for: "${text}", page: ${page}`); 
@@ -67,7 +68,7 @@ function handleImages(text, isNewSearch = false) {
 
 
     console.log(`Handling images for: "${text}", isNewSearch: ${isNewSearch}`); 
-    getImages(text, isNewSearch)
+    return getImages(text, isNewSearch)
         .then(data => {
 
             if (isNewSearch) {
@@ -76,18 +77,18 @@ function handleImages(text, isNewSearch = false) {
 
 
             if (data.hits.length === 0) {
+                loadButton.classList.add('invisible');
                 iziToast.show({
                     color: 'red',
                     message: "Sorry, there are no images matching your search query. Please try again!",
                     position: "topRight"
                 });
-
-                loadButton.classList.add('invisible');
                 return;
             }
             
             console.log(`Rendering ${data.hits.length} images`);
             renderHTML.render(data);
+
             totalLoaded += data.hits.length;
 
 
@@ -120,13 +121,37 @@ loadButton.addEventListener('click', () => {
     console.log('Load More clicked');
     console.log(`Current inputText before loading more: "${inputText}"`);
 
-    handleImages(inputText, false); 
+    handleImages(inputText, false)
+    .then(() => {
+        smoothScroll();
+    });
+
 });
+
+
+
+
+
+
+
+
+
+
+function smoothScroll() {
+    const card = document.querySelector('.gallery .card'); // Используйте правильный селектор для карточки
+    if (card) {
+        const cardHeight = card.getBoundingClientRect().height; // Получаем высоту карточки
+        window.scrollBy({
+            top: cardHeight * 3, // Прокручиваем на две высоты карточки
+            behavior: 'smooth' // Плавная прокрутка
+        });
+    }
+}
+
 
 
 
 export const imageFetcher = {
     handleImages
 };
-
 

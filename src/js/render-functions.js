@@ -16,7 +16,7 @@ export const renderHTML = {
 
 
 function render(data) {
-    const markup = data.hits.map(e => `<div>
+    const markup = data.hits.map(e => `<div class="card">
         <a href="${e.largeImageURL}" class="image-link">
                 <img src="${e.webformatURL}" class="image" alt="${e.tags}" title="${e.tags}" />
                 <div class="data">
