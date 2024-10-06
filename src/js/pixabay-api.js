@@ -16,6 +16,7 @@ const API_KEY = '46290930-3746f5b7b54e4eb8c1145cc43';
 let page = 1;
 const perPage = 15;
 let inputText = '';
+let totalHits = 0;
 
 
 
@@ -42,6 +43,7 @@ async function getImages(text, isNewSearch = false) {
 
 
         console.log(`Response received for page: ${page}`); // Лог после получения ответа
+        totalHits = response.data.totalHits;
         page++;
         return response.data; 
     } catch (error) {
@@ -82,8 +84,16 @@ function handleImages(text, isNewSearch = false) {
             
             console.log(`Rendering ${data.hits.length} images`); // Лог перед отрисовкой
             renderHTML.render(data);
-            
 
+            if (totalHits <= page * perPage) {
+                loadButton.classList.add('invisible');
+                iziToast.show({
+                    color: 'info',
+                    message: "We're sorry, but you've reached the end of search results.",
+                    position: "topRight"
+                });
+            }
+            
         })
         .catch(error => {
             iziToast.show({
