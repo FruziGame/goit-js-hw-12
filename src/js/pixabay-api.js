@@ -103,11 +103,6 @@ loadButton.addEventListener('click', () => {
 
     console.log(`Current inputText before loading more: "${inputText}"`);
     
-    // if (!inputText) {
-    //     console.warn('No input text provided. Ignoring Load More request.');
-    //     return;
-    // }
-    
     loadButton.disabled = true; 
     handleImages(inputText, false); 
 });
