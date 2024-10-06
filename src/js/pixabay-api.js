@@ -13,7 +13,7 @@ const url = `https://pixabay.com/api/`;
 const API_KEY = '46290930-3746f5b7b54e4eb8c1145cc43';
 
 let page = 1;
-const perPage = 3;
+const perPage = 15;
 let inputText = '';
 
 
@@ -103,10 +103,10 @@ loadButton.addEventListener('click', () => {
 
     console.log(`Current inputText before loading more: "${inputText}"`);
     
-    if (!inputText) {
-        console.warn('No input text provided. Ignoring Load More request.');
-        return;
-    }
+    // if (!inputText) {
+    //     console.warn('No input text provided. Ignoring Load More request.');
+    //     return;
+    // }
     
     loadButton.disabled = true; 
     handleImages(inputText, false); 
@@ -117,3 +117,5 @@ loadButton.addEventListener('click', () => {
 export const imageFetcher = {
     handleImages
 };
+
+
