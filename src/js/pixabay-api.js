@@ -7,6 +7,7 @@ import { renderHTML } from './render-functions';
 
 const loader = document.querySelector(".loader")
 const loadButton = document.querySelector(".load-button");
+const secondLoader = document.querySelector("#second-loader");
 
 
 const url = `https://pixabay.com/api/`;
@@ -60,6 +61,7 @@ function handleImages(text, isNewSearch = false) {
     loader.classList.add("visible");
 
 
+
     console.log(`Handling images for: "${text}", isNewSearch: ${isNewSearch}`); // Лог перед вызовом getImages
     getImages(inputText, isNewSearch)
         .then(data => {
@@ -80,8 +82,6 @@ function handleImages(text, isNewSearch = false) {
             
             console.log(`Rendering ${data.hits.length} images`); // Лог перед отрисовкой
             renderHTML.render(data);
-            loader.classList.remove("visible");
-            loadButton.classList.add("visible");
             
 
         })
@@ -94,11 +94,18 @@ function handleImages(text, isNewSearch = false) {
         })
         .finally(() => {
             loader.classList.remove("visible");
+            loadButton.classList.add("visible");
             loadButton.disabled = false;
+
+            if (!isNewSearch) {
+                secondLoader.classList.remove("visible");
+                loadButton.classList.add('visible')
+            }
         });
 }
 
 loadButton.addEventListener('click', () => {
+    loadButton.classList.add('invisible')
     console.log('Load More clicked');
 
     console.log(`Current inputText before loading more: "${inputText}"`);
