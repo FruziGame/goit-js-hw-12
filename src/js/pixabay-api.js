@@ -24,6 +24,7 @@ async function getImages(text, isNewSearch = false) {
 
     if (isNewSearch) {
         page = 1;
+        totalLoaded = 0;
     }
 
     console.log(`Fetching images for: "${text}", page: ${page}`); 
@@ -32,7 +33,7 @@ async function getImages(text, isNewSearch = false) {
         const response = await axios.get(url, {
             params: {
                 key: API_KEY,
-                q: inputText,
+                q: text,
                 image_type: 'photo',
                 orientation: 'horizontal',
                 safesearch: true,
@@ -66,7 +67,7 @@ function handleImages(text, isNewSearch = false) {
 
 
     console.log(`Handling images for: "${text}", isNewSearch: ${isNewSearch}`); 
-    getImages(inputText, isNewSearch)
+    getImages(text, isNewSearch)
         .then(data => {
 
             if (isNewSearch) {
@@ -98,7 +99,7 @@ function handleImages(text, isNewSearch = false) {
                     position: "topRight"
                 });
             } else {
-                loadButton.classList.add('visible');
+                loadButton.classList.remove('invisible');
             }
             
         })
@@ -117,10 +118,8 @@ function handleImages(text, isNewSearch = false) {
 loadButton.addEventListener('click', () => {
     loadButton.classList.add('invisible')
     console.log('Load More clicked');
-
     console.log(`Current inputText before loading more: "${inputText}"`);
-    
-    loadButton.disabled = true; 
+
     handleImages(inputText, false); 
 });
 
