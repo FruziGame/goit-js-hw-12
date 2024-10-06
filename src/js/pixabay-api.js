@@ -85,6 +85,9 @@ function handleImages(text, isNewSearch = false) {
             console.log(`Rendering ${data.hits.length} images`); // Лог перед отрисовкой
             renderHTML.render(data);
 
+            loadButton.classList.add("visible");
+            loadButton.disabled = false;
+
             if (totalHits <= page * perPage) {
                 loadButton.classList.add('invisible');
                 iziToast.show({
@@ -104,8 +107,6 @@ function handleImages(text, isNewSearch = false) {
         })
         .finally(() => {
             loader.classList.remove("visible");
-            loadButton.classList.add("visible");
-            loadButton.disabled = false;
 
             if (!isNewSearch) {
                 secondLoader.classList.remove("visible");
