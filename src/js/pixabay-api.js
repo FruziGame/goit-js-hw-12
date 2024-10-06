@@ -85,8 +85,6 @@ function handleImages(text, isNewSearch = false) {
             console.log(`Rendering ${data.hits.length} images`); // Лог перед отрисовкой
             renderHTML.render(data);
 
-            loadButton.classList.add("visible");
-            loadButton.disabled = false;
 
             if (totalHits <= page * perPage) {
                 loadButton.classList.add('invisible');
@@ -108,9 +106,9 @@ function handleImages(text, isNewSearch = false) {
         .finally(() => {
             loader.classList.remove("visible");
 
-            if (!isNewSearch) {
+            if (!isNewSearch && data.hits.length > 0) {
                 secondLoader.classList.remove("visible");
-                loadButton.classList.remove('invisible')
+                loadButton.classList.remove('invisible');
             }
         });
 }
