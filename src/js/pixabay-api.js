@@ -99,7 +99,7 @@ function handleImages(text, isNewSearch = false) {
 
             if (!isNewSearch) {
                 secondLoader.classList.remove("visible");
-                loadButton.classList.add('visible')
+                loadButton.classList.remove('invisible')
             }
         });
 }
