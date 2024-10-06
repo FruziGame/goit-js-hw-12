@@ -79,6 +79,8 @@ function handleImages(text, isNewSearch = false) {
                     message: "Sorry, there are no images matching your search query. Please try again!",
                     position: "topRight"
                 });
+                
+                loadButton.classList.add('invisible');
                 return;
             }
             
@@ -106,9 +108,8 @@ function handleImages(text, isNewSearch = false) {
         .finally(() => {
             loader.classList.remove("visible");
 
-            if (!isNewSearch && data.hits.length > 0) {
-                secondLoader.classList.remove("visible");
-                loadButton.classList.remove('invisible');
+            if (data.hits.length === 0) {
+                loadButton.classList.add('invisible'); 
             }
         });
 }
