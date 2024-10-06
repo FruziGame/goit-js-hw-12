@@ -86,9 +86,12 @@ function handleImages(text, isNewSearch = false) {
             
             console.log(`Rendering ${data.hits.length} images`); // Лог перед отрисовкой
             renderHTML.render(data);
+            loadButton.classList.add('visible')
+
 
 
             if (totalHits <= page * perPage) {
+
                 loadButton.classList.add('invisible');
                 iziToast.show({
                     color: 'info',
